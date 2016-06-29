@@ -1,0 +1,5 @@
+cron:
+- description: Realtime Dashboard Schedule
+  target: worker
+  url: /realtime/dashboard
+  schedule: every 5 minutes from 00:01 to 23:59

@@ -1,0 +1,26 @@
+service: python-worker
+runtime: python27
+api_version: 1
+threadsafe: true
+instance_class: F1
+
+
+builtins:
+- appstats: on
+- admin_redirect: on
+- deferred: on
+- remote_api: on
+
+libraries:
+- name: jinja2
+  version: "2.6"
+- name: markupsafe
+  version: "0.15"
+
+inbound_services:
+- warmup
+
+handlers:
+
+- url: .*
+  script: run.application.app
