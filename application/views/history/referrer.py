@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+from flask import current_app as app
 from google.appengine.ext import ndb
 from application.resources import bigquery
 from application.utils.datastore import incremental_update
@@ -102,6 +103,7 @@ def history_referrer():
             'maximumBillingTier': 2
         }
     }, {
+        'dataset': app.config['BIGQUERY_DATASET_REALTIME'],
         'time': query_time,
         'table': query_table
     })

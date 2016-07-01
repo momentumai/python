@@ -48,7 +48,7 @@ FROM (
           cat3,
           content_id,
           is_share
-        FROM (TABLE_QUERY([prod_realtime], 'table_id BETWEEN "views_{{to_table}}" AND "views_{{from_table}}"'))
+        FROM (TABLE_QUERY([{{dataset}}], 'table_id BETWEEN "views_{{to_table}}" AND "views_{{from_table}}"'))
         WHERE
           time BETWEEN SEC_TO_TIMESTAMP({{to}}) AND SEC_TO_TIMESTAMP({{from}}))
       GROUP BY
@@ -81,7 +81,7 @@ LEFT JOIN (
       SUM(IF(traffic_type == 1, 1, 0)) AS organic,
       SUM(IF(traffic_type == 2, 1, 0)) AS team,
       SUM(IF(traffic_type == 3, 1, 0)) AS paid
-    FROM (TABLE_QUERY([prod_realtime], 'table_id BETWEEN "views_{{to_table}}" AND "views_{{from_table}}"'))
+    FROM (TABLE_QUERY([{{dataset}}], 'table_id BETWEEN "views_{{to_table}}" AND "views_{{from_table}}"'))
     WHERE
       time BETWEEN SEC_TO_TIMESTAMP({{to}}) AND SEC_TO_TIMESTAMP({{from}})
     GROUP BY
@@ -120,7 +120,7 @@ LEFT JOIN (
           traffic_type,
           referrer,
           SUM(1) AS share
-        FROM (TABLE_QUERY([prod_realtime], 'table_id BETWEEN "views_{{to_table}}" AND "views_{{from_table}}"'))
+        FROM (TABLE_QUERY([{{dataset}}], 'table_id BETWEEN "views_{{to_table}}" AND "views_{{from_table}}"'))
         WHERE
           is_share AND
           time BETWEEN SEC_TO_TIMESTAMP({{to}}) AND SEC_TO_TIMESTAMP({{from}})

@@ -2,7 +2,7 @@ SELECT
   team_id,
   campaign,
   SUM(1) AS share
-FROM [prod_realtime.views_{{table}}]
+FROM [{{dataset}}.views_{{table}}]
 WHERE
   is_share
   AND campaign > 0 AND

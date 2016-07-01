@@ -3,4 +3,3 @@ jinja2
 simplejson
 unittest2
 google-api-python-client
-pybars3

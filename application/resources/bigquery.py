@@ -6,7 +6,6 @@ from flask import current_app as app
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from application.resources.google_request_builder import build_request
-from pybars import Compiler
 
 
 def get_service():
@@ -130,12 +129,19 @@ def iterate_elements(service, table, max_result, process, params):
     iterator(None)
 
 
+def replace_all(inp, params):
+    ret = inp
+    for key, value in params.iteritems():
+        ret = ret.replace('{{' + key + '}}', unicode(value))
+    return ret
+
+
 def compile_template(template, params):
     if template is None:
         return None
     if params is None:
         return template
-    return Compiler().compile(unicode(template))(params)
+    return replace_all(unicode(template), params)
 
 
 def query(query_string, udf, process, settings, params):
@@ -170,7 +176,7 @@ def query(query_string, udf, process, settings, params):
                 job['response']['status']['errorResult']
             )
         )
-        raise job['response']['status']['errorResult']
+        raise Exception(job['response']['status']['errorResult'])
 
     dest_table = job['response']['configuration']['query']['destinationTable']
 
@@ -234,7 +240,7 @@ def add_copy_job(service, route, settings):
                     response['status']['errorResult']
                 )
             )
-            raise response['status']['errorResult']
+            raise Exception(response['status']['errorResult'])
 
     return response
 

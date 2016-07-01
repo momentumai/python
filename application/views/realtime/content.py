@@ -74,6 +74,7 @@ def realtime_content():
             'maximumBillingTier': 2
         }
     }, {
+        'dataset': app.config['BIGQUERY_DATASET_REALTIME'],
         'from_table': from_time_table,
         'to_table': to_time_table,
         'from': from_time,

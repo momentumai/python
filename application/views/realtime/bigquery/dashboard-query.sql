@@ -30,7 +30,7 @@ FROM (
         new_cat1,
         new_cat2,
         new_cat3
-      FROM (TABLE_QUERY([prod_realtime], 'table_id BETWEEN "views_{{to_table}}" AND "views_{{from_table}}"'))
+      FROM (TABLE_QUERY([{{dataset}}], 'table_id BETWEEN "views_{{to_table}}" AND "views_{{from_table}}"'))
       WHERE
         time BETWEEN SEC_TO_TIMESTAMP({{to}}) AND SEC_TO_TIMESTAMP({{from}})
     )
