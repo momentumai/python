@@ -5,7 +5,7 @@ from application.utils.custom_time import to_hour
 def format_id(id_items):
     result = []
     for item in id_items:
-        result.append(str(item).replace('||', '--'))
+        result.append(str(item)[:128].replace('||', '--'))
     return '||'.join(result)
 
 

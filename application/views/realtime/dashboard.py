@@ -64,7 +64,11 @@ def realtime_dashboard():
         'timeout': 30,
         'max_result': 250,
         'service': {
-            'maximumBillingTier': 2
+            'maximumBillingTier': 2,
+            'allowLargeResults': True,
+            'destinationTable': {
+                'datasetId': app.config['BIGQUERY_DATASET_REALTIME_RESULT']
+            }
         }
     }, {
         'dataset': app.config['BIGQUERY_DATASET_REALTIME'],

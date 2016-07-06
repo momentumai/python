@@ -1,5 +1,6 @@
 import uuid
 import time
+from datetime import datetime
 
 from flask import current_app as app
 
@@ -22,10 +23,19 @@ def insert_query_job(service, query_string, udf, settings):
             'query': {
                 'query': query_string,
                 'dryRun': app.config['BIGQUERY_DRYRUN'],
-                'maximumBillingTier': settings.get('maximumBillingTier', 1)
+                'maximumBillingTier': settings.get('maximumBillingTier', 1),
+                'allowLargeResults': settings.get('allowLargeResults', False)
             }
         }
     }
+
+    if settings.get('destinationTable', None):
+        dest_table = {
+            'projectId': app.config['PROJECT_ID'],
+            'tableId': job_id.replace('-', '_'),
+            'datasetId': settings['destinationTable']['datasetId']
+        }
+        job_body['configuration']['query']['destinationTable'] = dest_table
 
     if udf is not None:
         job_body['configuration']['query']['userDefinedFunctionResources'] = udf
