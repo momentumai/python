@@ -21,7 +21,8 @@ def format_model(line, params):
         line['cat2'],
         line['cat3'],
         params['from'],
-        line['rank']
+        line['rank'],
+        line['content_id']
     ]
     model_value = {
         'rank': str(line['rank']),
