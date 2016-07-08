@@ -4,7 +4,6 @@ function getCategory(row, emit) {
         cat1: row.cat1,
         cat2: row.cat2,
         cat3: row.cat3,
-        category_map: row.category_map,
         is_share: row.is_share,
         content_id: row.content_id
     });
@@ -13,7 +12,6 @@ function getCategory(row, emit) {
         cat1: row.cat1,
         cat2: row.cat2,
         cat3: 'NONE',
-        category_map: row.category_map,
         is_share: row.is_share,
         content_id: row.content_id
     });
@@ -22,7 +20,6 @@ function getCategory(row, emit) {
         cat1: row.cat1,
         cat2: 'NONE',
         cat3: 'NONE',
-        category_map: row.category_map,
         is_share: row.is_share,
         content_id: row.content_id
     });
@@ -31,14 +28,13 @@ function getCategory(row, emit) {
         cat1: 'NONE',
         cat2: 'NONE',
         cat3: 'NONE',
-        category_map: row.category_map,
         is_share: row.is_share,
         content_id: row.content_id
     });
 }
 
 bigquery.defineFunction(
-    'getCategory', ['team_id', 'cat1', 'cat2', 'cat3', 'category_map', 'is_share', 'content_id'], [{
+    'getCategory', ['team_id', 'cat1', 'cat2', 'cat3', 'is_share', 'content_id'], [{
         'name': 'team_id',
         'type': 'integer'
     }, {
@@ -49,9 +45,6 @@ bigquery.defineFunction(
         'type': 'string'
     }, {
         'name': 'cat3',
-        'type': 'string'
-    }, {
-        'name': 'category_map',
         'type': 'string'
     }, {
         'name': 'is_share',

@@ -5,7 +5,6 @@ SELECT
   toplist.cat3 AS cat3,
   toplist.toplist_rank AS rank,
   toplist.content_id AS content_id,
-  toplist.category_map AS category_map,
   content.share AS share,
   content.view AS view,
   content.user AS user,
@@ -20,7 +19,6 @@ FROM (
     cat1,
     cat2,
     cat3,
-    category_map,
     content_id,
     toplist_rank,
     share
@@ -30,7 +28,6 @@ FROM (
       cat1,
       cat2,
       cat3,
-      category_map,
       content_id,
       RANK() OVER (PARTITION BY team_id, cat1, cat2, cat3 ORDER BY share DESC) toplist_rank,
       share
@@ -40,7 +37,6 @@ FROM (
         cat1,
         cat2,
         cat3,
-        category_map,
         content_id,
         SUM(is_share) share
       FROM
@@ -50,7 +46,6 @@ FROM (
           cat1,
           cat2,
           cat3,
-          category_map,
           content_id,
           is_share
         FROM (TABLE_QUERY([{{dataset}}], 'table_id BETWEEN "views_{{to_table}}" AND "views_{{from_table}}"'))
@@ -61,7 +56,6 @@ FROM (
         cat1,
         cat2,
         cat3,
-        category_map,
         content_id ))
   WHERE
     toplist_rank <= 10) toplist

@@ -27,7 +27,6 @@ def format_model(line, params):
     model_value = {
         'rank': str(line['rank']),
         'content_id': line['content_id'],
-        'category_map': line['category_map'],
         'share': str(line['share']),
         'view': str(line['view']),
         'user': str(line['user']),
