@@ -12,3 +12,4 @@ class Development(Base):
     BIGQUERY_DRYRUN = False
     BIGQUERY_DATASET_REALTIME = 'dev_realtime'
     BIGQUERY_DATASET_ANALYTICS = 'dev_analytics'
+    BIGQUERY_DATASET_REALTIME_RESULT = 'dev_realtime_result'

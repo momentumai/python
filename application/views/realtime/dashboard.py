@@ -47,11 +47,7 @@ def response_handler(schema, rows, params):
     app.logger.info('Datastore Response: {}'.format(response))
 
 
-def realtime_dashboard():
-    udf = [{
-        'inlineCode': read_file(__file__, '/bigquery/dashboard-udf.js')
-    }]
-
+def realtime_dashboard(level):
     query = read_file(__file__, '/bigquery/dashboard-query.sql')
 
     from_time = get_five_minutes_prev()
@@ -60,11 +56,11 @@ def realtime_dashboard():
     from_time_table = get_table_name_hour(from_time)
     to_time_table = get_table_name_hour(to_time)
 
-    bigquery.query(query, udf, response_handler, {
+    bigquery.query(query, None, response_handler, {
         'timeout': 30,
         'max_result': 250,
         'service': {
-            'maximumBillingTier': 2,
+            'maximumBillingTier': 1,
             'allowLargeResults': True,
             'destinationTable': {
                 'datasetId': app.config['BIGQUERY_DATASET_REALTIME_RESULT']
@@ -75,7 +71,11 @@ def realtime_dashboard():
         'from_table': from_time_table,
         'to_table': to_time_table,
         'from': from_time,
-        'to': to_time
+        'to': to_time,
+        'cat1': 'cat1' if level > 0 else '\'NONE\'',
+        'cat2': 'cat2' if level > 1 else '\'NONE\'',
+        'cat3': 'cat3' if level > 2 else '\'NONE\'',
+        'new_cat': 'new_cat%s' % level
     })
 
     return "Succeed"

@@ -17,23 +17,19 @@ FROM (
     SUM(is_share) AS share,
     COUNT(1) AS view,
     SUM(is_new) AS user
-  FROM
-    getCategory (
+  FROM (
       SELECT
         team_id,
-        cat1,
-        cat2,
-        cat3,
+        {{cat1}} AS cat1,
+        {{cat2}} AS cat2,
+        {{cat3}} AS cat3,
         is_share,
         time,
-        new_cat0,
-        new_cat1,
-        new_cat2,
-        new_cat3
+        {{new_cat}} AS is_new
       FROM (TABLE_QUERY([{{dataset}}], 'table_id BETWEEN "views_{{to_table}}" AND "views_{{from_table}}"'))
       WHERE
         time BETWEEN SEC_TO_TIMESTAMP({{to}}) AND SEC_TO_TIMESTAMP({{from}})
-    )
+    ) t1
   GROUP BY
     team_id,
     cat1,

@@ -29,14 +29,14 @@ def add_rules(app):
     )
 
     app.add_url_rule(
-        '/realtime/dashboard',
+        '/realtime/dashboard/<int:level>',
         'realtime_dashboard',
         view_func=realtime_dashboard,
         methods=['GET']
     )
 
     app.add_url_rule(
-        '/realtime/content',
+        '/realtime/content/<int:level>',
         'realtime_content',
         view_func=realtime_content,
         methods=['GET']

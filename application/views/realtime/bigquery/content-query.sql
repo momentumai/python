@@ -39,24 +39,26 @@ FROM (
         cat3,
         content_id,
         SUM(is_share) share
-      FROM
-        getCategory(
+      FROM (
         SELECT
           team_id,
-          cat1,
-          cat2,
-          cat3,
+          {{cat1}} AS cat1,
+          {{cat2}} AS cat2,
+          {{cat3}} AS cat3,
           content_id,
           is_share
         FROM (TABLE_QUERY([{{dataset}}], 'table_id BETWEEN "views_{{to_table}}" AND "views_{{from_table}}"'))
         WHERE
-          time BETWEEN SEC_TO_TIMESTAMP({{to}}) AND SEC_TO_TIMESTAMP({{from}}))
+          time BETWEEN SEC_TO_TIMESTAMP({{to}}) AND SEC_TO_TIMESTAMP({{from}})
+      )
       GROUP BY
         team_id,
         cat1,
         cat2,
         cat3,
-        content_id ))
+        content_id
+      )
+    )
   WHERE
     toplist_rank <= 10) toplist
 LEFT JOIN (
