@@ -1,3 +1,4 @@
 .idea
 config/production.py
+config/development.py
 *.pyc

@@ -14,6 +14,9 @@ from application.views.realtime.content import realtime_content
 from application.views.history.referrer import history_referrer
 from application.views.history.campaign import history_campaign
 from application.views.management import copy_old_data
+from application.views.rule.schedule import schedule
+from application.views.rule.run import run
+
 
 def filter_ip():
     if (not os.environ['SERVER_SOFTWARE'].startswith('Dev') and
@@ -61,6 +64,20 @@ def add_rules(app):
         'copy_old_data',
         view_func=copy_old_data,
         methods=['GET']
+    )
+
+    app.add_url_rule(
+        '/rule/schedule',
+        'schedule_rule',
+        view_func=schedule,
+        methods=['GET']
+    )
+
+    app.add_url_rule(
+        '/rule/run',
+        'run_rule',
+        view_func=run,
+        methods=['POST']
     )
 
     # app.before_request(filter_ip)
