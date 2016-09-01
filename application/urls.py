@@ -15,7 +15,6 @@ from application.views.history.referrer import history_referrer
 from application.views.history.campaign import history_campaign
 from application.views.management import copy_old_data
 from application.views.rule.schedule import schedule
-from application.views.rule.run import run
 
 
 def filter_ip():
@@ -71,13 +70,6 @@ def add_rules(app):
         'schedule_rule',
         view_func=schedule,
         methods=['GET']
-    )
-
-    app.add_url_rule(
-        '/rule/run',
-        'run_rule',
-        view_func=run,
-        methods=['POST']
     )
 
     # app.before_request(filter_ip)

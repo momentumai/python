@@ -2,22 +2,30 @@
 
 from application.resources import mysql
 from google.appengine.api import taskqueue
+from application.utils import custom_time
+import time
 
 
 def schedule():
     db = mysql.get_service()
-    features = []
+    timestamp = custom_time.to_minutes(5, 10, time.time())
+    futures = []
 
     result = mysql.fetch(__file__, 'get_rules', {'exclude': 5}, db)
 
     for row in mysql.iter(result, 1):
-        task = taskqueue.Task(None, url='/rule/run', params=row)
-        feature = taskqueue.Queue(name='rule').add_async(task)
-        features.append(feature)
+        params = {
+            'team_id': str(row['team_id']),
+            'timestamp': timestamp,
+            'rules': [row]
+        }
+        task = taskqueue.Task(None, url='/api/worker/rules', params=params)
+        future = taskqueue.Queue(name='rule').add_async(task)
+        futures.append(future)
 
     db.close()
 
-    for feature in features:
-        feature.get_result()
+    for future in futures:
+        future.get_result()
 
     return 'Success'

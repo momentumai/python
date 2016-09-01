@@ -1,8 +1,9 @@
 queue:
 - name: rule
-  rate: 20/s
-  bucket_size: 40
-  max_concurrent_requests: 100
+  target: node-api
+  rate: 50/s
+  bucket_size: 500
+  max_concurrent_requests: 20
   retry_parameters:
     min_backoff_seconds: 10
     max_backoff_seconds: 60
