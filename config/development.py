@@ -13,3 +13,10 @@ class Development(Base):
     BIGQUERY_DATASET_REALTIME = 'dev_realtime'
     BIGQUERY_DATASET_ANALYTICS = 'dev_analytics'
     BIGQUERY_DATASET_REALTIME_RESULT = 'dev_realtime_result'
+
+    DB_HOST = ''
+    DB_USER = ''
+    DB_PASSWORD = ''
+    DB_DATABASE = ''
+
+    WORKER_TOKEN = 'ULTRA-SECRET-TOKEN'

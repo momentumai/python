@@ -3,7 +3,9 @@
 from application.resources import mysql
 from google.appengine.api import taskqueue
 from application.utils import custom_time
+from flask import current_app as app
 import time
+import json
 
 
 def schedule():
@@ -14,12 +16,19 @@ def schedule():
     result = mysql.fetch(__file__, 'get_rules', {'exclude': 5}, db)
 
     for row in mysql.iter(result, 1):
-        params = {
+        payload = {
+            'access_token': app.config['WORKER_TOKEN'],
             'team_id': str(row['team_id']),
             'timestamp': timestamp,
             'rules': [row]
         }
-        task = taskqueue.Task(None, url='/api/worker/rules', params=params)
+        headers = {
+            'Content-Type': 'application/json'
+        }
+        task = taskqueue.Task(
+            json.dumps(payload),
+            url='/api/worker/rules',
+            headers=headers)
         future = taskqueue.Queue(name='rule').add_async(task)
         futures.append(future)
 

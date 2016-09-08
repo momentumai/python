@@ -11,6 +11,7 @@ from flask import request
 from application.views.public.public_warmup import public_warmup
 from application.views.realtime.dashboard import realtime_dashboard
 from application.views.realtime.content import realtime_content
+from application.views.realtime.content2 import realtime_content2
 from application.views.history.referrer import history_referrer
 from application.views.history.campaign import history_campaign
 from application.views.management import copy_old_data
@@ -41,6 +42,13 @@ def add_rules(app):
         '/realtime/content/<int:level>',
         'realtime_content',
         view_func=realtime_content,
+        methods=['GET']
+    )
+
+    app.add_url_rule(
+        '/realtime/content2/<int:level>',
+        'realtime_content2',
+        view_func=realtime_content2,
         methods=['GET']
     )
 

@@ -9,5 +9,8 @@ class HistoryCampaignModel(ndb.Model):
 class RealtimeContentModel(ndb.Model):
     value = ndb.StringProperty(required=True, indexed=False)
 
+class RealtimeContentModelV2(ndb.Model):
+    value = ndb.StringProperty(required=True, indexed=False)
+
 class RealtimeDashboardModel(ndb.Model):
     value = ndb.StringProperty(required=True, indexed=False)
